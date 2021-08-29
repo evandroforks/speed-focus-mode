@@ -227,7 +227,7 @@ def webview_message_handler(reviewer: Reviewer, message: str):
         tooltip(
             "Wake up! You have been looking at <br>"
             "the question for <b>{}</b> seconds!".format(timeout),
-            period=1000,
+            period=6000,
         )
     elif action == "action":
         action = deck_config.get("autoAction", "again")
