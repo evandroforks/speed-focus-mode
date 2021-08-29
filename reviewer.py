@@ -232,50 +232,6 @@ def webview_message_handler(reviewer: Reviewer, message: str):
     elif action == "action":
         action = deck_config.get("autoAction", "again")
 
-    elif action == "cardinfo":
-        from anki.stats import CardStats
-        from aqt.qt import QDialog
-        from PyQt5 import QtCore, QtGui, QtWidgets
-        from aqt.webview import AnkiWebView
-        from aqt import QDialogButtonBox, qconnect, Qt
-        from aqt.utils import saveGeom, restoreGeom
-
-        cs = CardStats(mw.col, mw.reviewer.card)
-        info = cs.report(include_revlog=True)
-        reps = ""
-
-        class CardInfoDialog(QDialog):
-            silentlyClose = True
-
-            def __init__(self, browser, *args, **kwargs):
-                super().__init__(browser, *args, **kwargs)
-                self.browser = browser
-
-            def reject(self):
-                saveGeom(self, "revlog")
-                return QDialog.reject(self)
-
-        card_info_dialog = CardInfoDialog(None)
-        icon = QtGui.QIcon()
-        icon.addPixmap(
-            QtGui.QPixmap(":/icons/anki.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
-        )
-        card_info_dialog.setWindowIcon(icon)
-
-        l = QtWidgets.QVBoxLayout()
-        l.setContentsMargins(0, 0, 0, 0)
-        w = AnkiWebView(title="browser card info")
-        l.addWidget(w)
-        w.stdHtml(info + "<p>" + reps, context=card_info_dialog)
-        bb = QDialogButtonBox(QDialogButtonBox.Close)
-        l.addWidget(bb)
-        qconnect(bb.rejected, card_info_dialog.reject)
-        card_info_dialog.setLayout(l)
-        card_info_dialog.setWindowModality(Qt.WindowModal)
-        card_info_dialog.resize(500, 400)
-        restoreGeom(card_info_dialog, "revlog")
-        card_info_dialog.show()
-
     if action == "again":
         if reviewer.state == "question":
             reviewer._showAnswer()
