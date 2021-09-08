@@ -50,7 +50,7 @@ if TYPE_CHECKING:
 
     assert mw is not None
 
-from .config import local_conf
+from .config import local_conf, default_configs
 from .consts import MODULE_ADDON, PATH_ADDON, PATH_USERFILES
 
 # Support for custom alert sounds located in user_files dir
@@ -92,8 +92,8 @@ def set_answer_timeouts(reviewer: Reviewer):
 
     c = get_config_dict_for_deck_id(reviewer.mw.col.decks, card.odid or card.did)
     countdown_requested = False
-    if c.get("autoAlert", 30) > 0:
-        reviewer.bottom.web.eval("spdfSetAutoAlert(%d);" % (c.get("autoAlert", 30) * 1000))
+    if c.get("autoAlert", default_configs["autoAlert"]) > 0:
+        reviewer.bottom.web.eval("spdfSetAutoAlert(%d);" % (c.get("autoAlert", default_configs["autoAlert"]) * 1000))
 
     if c.get("autoSkip") and c.get("autoAgain", 0) > 0:
         action = c.get("autoAction", "again").capitalize()
@@ -223,7 +223,7 @@ def webview_message_handler(reviewer: Reviewer, message: str):
     elif action == "alert":
         av_player.clear_queue_and_maybe_interrupt()
         av_player.play_file(ALERT_PATH)
-        timeout = deck_config.get("autoAlert", 30)
+        timeout = deck_config.get("autoAlert", default_configs["autoAlert"])
         tooltip(
             "Wake up! You have been looking at <br>"
             "the question for <b>{}</b> seconds!".format(timeout),

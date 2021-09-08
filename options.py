@@ -39,6 +39,8 @@ from aqt.qt import *
 from aqt.deckconf import DeckConf
 from aqt.forms import dconf
 
+from .config import default_configs
+
 ########################################################################
 
 action_spin_items = (
@@ -107,7 +109,7 @@ def setupUI(self, Dialog):
 def load_conf(self):
     f = self.form
     c = self.conf
-    f.autoAlert.setValue(c.get('autoAlert', 30))
+    f.autoAlert.setValue(c.get('autoAlert', default_configs["autoAlert"]))
     f.autoAnswer.setValue(c.get('autoAnswer', 0))
     # keep "autoAgain" as name for legacy reasons
     f.autoActionTimer.setValue(c.get('autoAgain', 0))
