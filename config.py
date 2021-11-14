@@ -47,8 +47,8 @@ def writeConfig(config):
 local_conf = getConfig()
 
 default_configs = {
-    "autoSkip": 30,
-    "autoAlert": 0,
+    "autoSkip": 0,
+    "autoAlert": 10,
     "autoAction": 0,
     "autoAnswer": 0,
     "autoAgain": 0,
