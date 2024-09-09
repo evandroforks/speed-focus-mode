@@ -125,4 +125,4 @@ const spdfButtonHTML = `
 `;
 
 
-document.getElementById("middle").insertAdjacentHTML("afterend", spdfButtonHTML);
+// document.getElementById("middle").insertAdjacentHTML("afterend", spdfButtonHTML);
